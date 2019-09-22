@@ -1,0 +1,123 @@
+---------------------------------      INICIA POSTGRESQL NO c9      --------------------------------------
+
+
+maicksilva:~/workspace $ sudo service postgresql start
+* Starting PostgreSQL 9.3 database server [ OK ]
+
+
+---------------------------------      CREATE USER "ec2-user"     --------------------------------------
+
+
+maicksilva:~/workspace $ sudo su - postgres # login as postgres user
+
+postgres@maicksilva-scfo-6123517:~$ psql -U postgres # login to postgres db as postgres user
+
+psql (9.3.18)
+
+Type "help" for help.
+
+postgres=# ALTER USER postgres WITH PASSWORD 'YOUR_PASSWORD';                                                              
+
+ALTER ROLE
+
+
+postgres=# CREATE USER "ec2-user" SUPERUSER;
+
+CREATE ROLE
+
+
+postgres=# ALTER USER "ec2-user" WITH PASSWORD '123456';                                                                   
+
+ALTER ROLE
+
+
+postgres=# \q
+
+postgres@maicksilva-scfo-6123517:~$ exit
+logout
+
+
+---------------------------------      FAZ LOGIN      --------------------------------------
+
+
+maicksilva:~/workspace $ psql postgres
+
+psql (9.3.18)
+
+Type "help" for help.
+
+
+
+---------------------------------      CREATE DATABASE      --------------------------------------
+postgres=# CREATE DATABASE "SCFO";      
+CREATE DATABASE
+
+
+postgres=# \list
+
+
+
+
+postgres=# \c SCFO
+
+You are now connected to database "SCFO" as user "ubuntu".
+SCFO=# 
+
+
+---------------------------------      COMANDOS CLOUD9      --------------------------------------
+\d - lista tabelas
+\d "nome da tabela" - lista tabela
+\c - conecta com database
+\list - lista os database
+
+
+
+---------------------------------      CREATE TABLES      --------------------------------------
+CREATE TABLE USUARIO(
+
+ cpf varchar(14) NOT NULL PRIMARY KEY,
+
+ nome varchar(100) NOT NULL,
+
+ email varchar(100) NOT NULL
+
+);
+
+CREATE TABLE SENHA(
+
+ codigo_senha SERIAL PRIMARY KEY,
+
+ data_senha date NOT NULL,
+
+ senha varchar(50) NOT NULL,
+
+ USUARIO_cpf varchar(14) NOT NULL,
+
+ CONSTRAINT fk_SENHA_USUARIO
+
+     FOREIGN KEY (USUARIO_cpf)
+
+     REFERENCES USUARIO (cpf)
+);
+
+
+
+
+
+
+
+
+
+
+---------------------------------      INSERTS DE TESTE      --------------------------------------
+INSERT INTO public."USUARIO"(cpf, nome, email)
+	VALUES ('11111111111', 'william', 'email@email.com');
+
+INSERT INTO public."SENHA"(data_senha, senha, "USUARIO_cpf")
+	VALUES ('2018-05-25', md5('123456'), '11111111111');
+
+
+
+SELECT u.cpf, s.senha FROM public."USUARIO" as U INNER JOIN public."SENHA" as S ON u.cpf = s."USUARIO_cpf" WHERE 
+
+cpf='11111111111' AND senha='123456';
