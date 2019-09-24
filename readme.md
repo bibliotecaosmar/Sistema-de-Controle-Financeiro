@@ -1,4 +1,4 @@
-# Description #
+# About #
 Web application that allow manage your personal finances
 
 # Link of the doc project #
