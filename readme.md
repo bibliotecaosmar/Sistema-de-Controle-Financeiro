@@ -1,4 +1,4 @@
-![img](https://github.com/bibliotecaosmar/Sistema-de-Controle-Financeiro/tree/master/asset/money.jpg)
+![img](https://github.com/bibliotecaosmar/Sistema-de-Controle-Financeiro/blob/master/asset/money.jpg)
 
 # About #
 Web application that allow manage your personal finances
